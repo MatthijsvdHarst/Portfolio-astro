@@ -1,10 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import fetchApi from '../lib/strapi';
-import type { IUser } from '../interface';
+import type { IAbout } from '../interface';
 
-const articles = await fetchApi<IUser[]>({
-  endpoint: 'users',
+const page = await fetchApi<IAbout>({
+  endpoint: 'about',
+  wrappedByKey: 'data'
 });
 
 ---
@@ -14,15 +15,8 @@ const articles = await fetchApi<IUser[]>({
 		
 		<h1>My portfolio</h1>
 
-		{
-			articles.map((item) => (
-				<li>
-					<a href={`/projects/${item.id}/`}>
-						{item.username}
-					</a>
-				</li>
-			))
-		}
+    
+    {page.attributes.content}
 	
 	</main>
 </Layout>
